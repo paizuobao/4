@@ -1,0 +1,2436 @@
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 消除触摸延迟 */
+a, button, input, select, textarea, label, .btn, .student-item, .seat, .color-swatch {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 头部样式 */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.header h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.header-promo {
+    font-size: 0.65rem;
+    opacity: 0.8;
+    color: #e2e8f0;
+    font-weight: 400;
+    white-space: nowrap;
+    margin-bottom: 2px;
+}
+
+.cute-font {
+    font-family: 'Comic Sans MS', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', cursive;
+    font-weight: 700;
+    color: #ff69b4;
+    text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+    font-size: 1.4em;
+    letter-spacing: 0.05em;
+}
+
+.header-center {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #4338ca;
+}
+
+.btn-secondary {
+    background-color: #6b7280;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #4b5563;
+}
+
+.btn-success {
+    background-color: #059669;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #047857;
+}
+
+.btn-info {
+    background-color: #0891b2;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #0e7490;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.btn-outline:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+}
+
+.btn-edit {
+    background-color: #0891b2;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0e7490;
+}
+
+.btn-small {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 主要布局 */
+.main-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+    flex: 1;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 0;
+}
+
+/* 侧边栏样式 */
+.sidebar-left {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
+    background: #f8fafc;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.panel-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+    text-align: center;
+}
+
+.panel-actions {
+    padding: 0.75rem 0.5rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    gap: 0.25rem;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+/* 学生管理区域 */
+.student-controls {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.student-list {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0; /* 确保可以收缩 */
+}
+
+.student-item {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    transition: background-color 0.2s;
+    gap: 0.5rem;
+}
+
+.student-item:hover {
+    background-color: #f8fafc;
+}
+
+.student-item.seated {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.student-item.selected {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+/* 筛选隐藏样式 */
+.student-item.search-hidden,
+.student-item.status-hidden {
+    display: none !important;
+}
+
+.student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.student-name {
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.student-details {
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.student-notes {
+    font-size: 0.7rem;
+    color: #8b5cf6;
+    font-style: italic;
+    margin-top: 0.125rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: #f3f4f6;
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+    max-width: 100%;
+}
+
+.student-actions {
+    display: flex;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+.student-actions .btn {
+    padding: 0.375rem 0.625rem;
+    font-size: 0.75rem;
+    min-width: auto;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+}
+
+.student-actions .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.student-stats {
+    padding: 0.25rem 0.5rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto; /* 将统计信息推到底部 */
+}
+
+.student-actions {
+    padding: 1rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+}
+
+.stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    color: #64748b;
+}
+
+.stat-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* 主要内容区域 */
+.main-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-top: -0.25rem;
+}
+
+.classroom-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.classroom-header {
+    padding: 0.5rem 0.75rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 0;
+}
+
+.classroom-header h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.classroom-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #64748b;
+    position: absolute;
+    right: 0.75rem;
+}
+
+.separator {
+    color: #cbd5e1;
+}
+
+.settings-btn {
+    background-color: #f8fafc;
+    border-color: #e2e8f0;
+    color: #64748b;
+}
+
+.settings-btn:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #475569;
+}
+
+.layout-settings-container {
+    position: relative;
+    display: inline-block;
+}
+
+.layout-settings-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    min-width: 220px;
+    z-index: 1000;
+    margin-top: 6px;
+    overflow: hidden;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.layout-settings-item {
+    padding: 12px 16px;
+    transition: background-color 0.2s ease;
+}
+
+.layout-settings-item:hover {
+    background-color: #f8fafc;
+}
+
+.layout-settings-item .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.875rem;
+    color: #374151;
+    margin: 0;
+    cursor: pointer;
+}
+
+.layout-settings-item .checkbox-group input[type="checkbox"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #3b82f6;
+}
+
+.layout-settings-item .checkbox-group span {
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
+.layout-settings-item .font-setting-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.875rem;
+    color: #374151;
+    margin: 0;
+    width: 100%;
+}
+
+.layout-settings-item .font-setting-group span {
+    font-weight: 500;
+    white-space: nowrap;
+    color: #374151;
+}
+
+.select-field-small {
+    font-size: 0.875rem;
+    padding: 6px 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: white;
+    color: #374151;
+    min-width: 80px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.select-field-small:hover {
+    border-color: #3b82f6;
+}
+
+.select-field-small:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.layout-settings-item:not(:last-child) {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.layout-settings-item + .layout-settings-item {
+    margin-top: 0;
+}
+
+.layout-setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: #374151;
+}
+
+.layout-section-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.layout-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.layout-controls-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.input-group-compact {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.input-group-compact label {
+    font-size: 0.875rem;
+    color: #374151;
+    white-space: nowrap;
+}
+
+.input-small-dropdown {
+    width: 45px;
+    font-size: 0.875rem;
+    padding: 4px 6px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background-color: white;
+    color: #374151;
+    text-align: center;
+}
+
+.input-small-dropdown:hover {
+    border-color: #3b82f6;
+}
+
+.input-small-dropdown:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.apply-layout-dropdown {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    line-height: 1.2;
+}
+
+/* Color picker styles */
+.color-setting-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.color-section-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #374151;
+    margin-bottom: 4px;
+}
+
+.color-swatches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.color-swatch:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.color-swatch.selected {
+    border-color: #374151;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #374151;
+}
+
+.color-swatch.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Special styling for light colors */
+.color-swatch[data-color="#FEF9E7"].selected::after {
+    color: #374151;
+    text-shadow: none;
+}
+
+.color-swatch[data-color="#F1C40F"].selected::after {
+    color: #374151;
+    text-shadow: none;
+}
+
+/* Special styling for dark black color */
+.color-swatch[data-color="#1a1a1a"].selected::after {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 座位轮换控制样式 - 头部版本 */
+.rotation-controls-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rotation-header-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.rotation-buttons-header {
+    display: flex;
+    gap: 3px;
+}
+
+.rotation-btn-header {
+    min-width: 24px;
+    height: 24px;
+    padding: 2px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d1d5db;
+    background-color: transparent;
+    color: #6b7280;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.rotation-btn-header:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+    color: #374151;
+    transform: translateY(-1px);
+}
+
+.rotation-btn-header:active {
+    transform: translateY(0);
+    background-color: #e5e7eb;
+}
+
+.rotation-btn-header:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+}
+
+.classroom-grid {
+    flex: 1;
+    padding: 6% 4% 0.5% 4%;
+    display: grid;
+    row-gap: 8px;
+    column-gap: 8px;
+    justify-content: center;
+    align-content: center;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    position: relative;
+    border: 2px solid #94a3b8;
+    border-radius: 8px;
+    min-height: 400px;
+    /* 设置固定的长宽比 1.232:1 (缩短12%) */
+    aspect-ratio: 1.232 / 1;
+}
+
+/* 座位样式 */
+.seat {
+    width: 100px;
+    height: 50px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    position: relative;
+    user-select: none;
+    margin: 2px;
+}
+
+
+.seat-empty {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #94a3b8;
+}
+
+.seat-empty:hover {
+    background-color: #e2e8f0;
+    transform: scale(1.05);
+}
+
+.seat-occupied {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    border-color: #cbd5e1;
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.seat-occupied .seat-number {
+    color: #374151;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.55rem;
+    font-weight: 700;
+}
+
+:root {
+    --male-color: #2563eb;
+    --female-color: #ec4899;
+}
+
+.seat-occupied.male {
+    color: var(--male-color);
+}
+
+.seat-occupied.female {
+    color: var(--female-color);
+}
+
+.seat-occupied:hover {
+    background-color: #e2e8f0;
+    transform: scale(1.05);
+}
+
+.seat-selected {
+    background-color: #f59e0b;
+    color: white;
+    border-color: #d97706;
+    animation: pulse 2s infinite;
+}
+
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.seat-number {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    color: #64748b;
+    font-size: 0.6rem;
+    font-weight: 700;
+    line-height: 1;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1px 3px;
+    border-radius: 2px;
+}
+
+.student-name-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.7rem;
+    font-weight: 600;
+    z-index: 2;
+    text-align: center;
+    width: 95%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* 默认字体，确保一致性 */
+    font-family: 'SimSun', 'NSimSun', 'Songti TC', 'Songti SC', 'STSong', 'Times New Roman', serif;
+}
+
+.student-name-display[draggable="true"] {
+    cursor: grab;
+    user-select: none;
+}
+
+.student-name-display[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+.student-name-display.name-4 {
+    font-size: 1.1rem;
+    width: 98%;
+}
+
+.student-name-display.name-5 {
+    font-size: 0.9rem;
+    width: 98%;
+}
+
+.student-name-display.name-6 {
+    font-size: 0.75rem;
+    width: 98%;
+}
+
+.student-name-display.name-7 {
+    font-size: 0.65rem;
+    width: 98%;
+}
+
+.student-name-display.name-8-plus {
+    font-size: 0.55rem;
+    width: 98%;
+}
+
+/* 字体样式类 */
+.student-name-display.font-song {
+    /* 宋体 - 传统印刷字体 */
+    font-family: 'SimSun', 'NSimSun', 'Songti TC', 'Songti SC', 'STSong', 'Times New Roman', serif !important;
+}
+
+.student-name-display.font-hei {
+    /* 黑体 - 无衬线字体 */
+    font-family: 'SimHei', 'Heiti TC', 'Heiti SC', 'STHeiti', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', Arial, sans-serif !important;
+}
+
+.student-name-display.font-kai {
+    /* 楷体 - 书法风格字体 */
+    font-family: 'KaiTi', 'STKaiti', 'Kaiti TC', 'Kaiti SC', 'BiauKai', 'Times New Roman', serif !important;
+}
+
+.student-name-display.font-yahei {
+    /* 微软雅黑 - 现代无衬线字体 */
+    font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+.student-name-display.font-fangsong {
+    /* 仿宋 - 仿宋体印刷字体 */
+    font-family: 'FangSong', 'STFangsong', 'Fangsong TC', 'Fangsong SC', 'Times New Roman', serif !important;
+}
+
+/* 坐标显示控制 */
+.classroom-grid.hide-coordinates .seat-number {
+    display: none;
+}
+
+/* 约束输入组样式 */
+.constraint-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* 约束列表样式 */
+.no-constraints {
+    color: #9ca3af;
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 6px;
+    border: 1px dashed #d1d5db;
+}
+
+.constraint-text {
+    flex: 1;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+.constraint-actions {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.seat-remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #dc2626;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 20;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.seat-remove-btn:hover {
+    background: #b91c1c;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+/* 删除座位按钮样式 */
+.seat-delete-btn {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: #f59e0b;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 20;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.seat-delete-btn:hover {
+    background: #d97706;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+/* 教室图例 */
+.classroom-legend {
+    padding: 1rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.seat-demo {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+/* 讲台样式 */
+.podium {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.podium-in-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+.podium-shape {
+    position: relative;
+    width: 200px;
+    height: 50px;
+    background: linear-gradient(135deg, #8b5a3c 0%, #a0692e 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,255,0.3);
+    
+    /* 移除3D效果和梯形，使用简单矩形 */
+    /* transform: perspective(100px) rotateX(5deg); */
+    /* clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%); */
+}
+
+.podium-text {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    letter-spacing: 0.5px;
+    
+    /* 移除3D文字效果，使用简单样式 */
+    /* transform: perspective(100px) rotateX(-5deg); */
+}
+
+/* 右侧控制面板 */
+.setting-group {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.setting-group:last-child {
+    border-bottom: none;
+}
+
+/* 右侧状态信息面板 */
+.classroom-status {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: #f8fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.status-label {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.status-item span:last-child {
+    font-size: 0.875rem;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.setting-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.layout-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    margin: 0;
+    min-width: 80px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.rule-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.font-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin: 0;
+}
+
+.checkbox-group label {
+    margin: 0;
+    font-weight: normal;
+    font-size: 0.875rem;
+}
+
+
+
+.constraint-list {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.constraint-item {
+    padding: 0.5rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.constraint-text {
+    flex: 1;
+    font-size: 0.875rem;
+    color: #374151;
+    line-height: 1.5;
+}
+
+.constraint-actions {
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+.no-constraints {
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+    padding: 1rem;
+}
+
+.history-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* 表单元素 */
+.input-field,
+.select-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.student-controls .input-field {
+    flex: 2;
+    min-width: 120px;
+}
+
+.student-controls .select-field {
+    flex: 1;
+    min-width: 100px;
+}
+
+.input-field:focus,
+.select-field:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.input-small {
+    width: 60px;
+    padding: 0.375rem 0.5rem;
+}
+
+/* 模态框样式 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* 排座设置透明浮层模态框 */
+.seating-settings-modal {
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+}
+
+.seating-settings-content {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.modal-close {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #374151;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* 可访问性：屏幕阅读器专用标签 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 平板横屏优化 */
+@media (orientation: landscape) and (min-width: 768px) and (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 220px 1fr;
+    }
+    
+    .classroom-grid {
+        aspect-ratio: auto;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .main-container {
+        grid-template-columns: 230px 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    .header {
+        padding: 0.4rem 1rem;
+    }
+    
+    .header h1 {
+        font-size: 1.25rem;
+    }
+    
+    .header-center {
+        gap: 0.25rem;
+    }
+    
+    .podium-shape {
+        width: 180px;
+        height: 45px;
+    }
+    
+    .podium-text {
+        font-size: 1rem;
+    }
+}
+
+/* 平板端适配 (768px-1024px) 已在上方定义 */
+
+/* 手机端媒体查询已移除 - 应用仅支持电脑端和平板端 */
+
+/* 强制GPU加速，提升性能 */
+.classroom-grid,
+.student-list,
+.seat,
+.student-item {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* 拖拽样式 - 保持原样不变（已移除视觉效果） */
+
+.seat-dragging {
+    /* 移除视觉效果，保持原样 */
+    z-index: 10;
+    position: relative;
+}
+
+/* 拖拽目标样式 */
+.seat-drop-target {
+    background-color: #dcfce7 !important;
+    border-color: #16a34a !important;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5) !important;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+.seat-drop-invalid {
+    background-color: #fef2f2 !important;
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.5) !important;
+}
+
+.drag-over {
+    background-color: #fef3c7;
+    border-color: #f59e0b;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* 工具提示 */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e293b;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 1000;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+}
+
+/* Excel导入功能样式 */
+
+.excel-preview-modal .modal-content {
+    max-width: 900px;
+    width: 95%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.excel-preview-modal .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 1.5rem;
+}
+
+.excel-preview-modal .modal-header {
+    padding: 0.75rem 1.5rem 0.25rem;
+}
+
+.excel-preview-modal .modal-footer {
+    flex-shrink: 0;
+    border-top: 1px solid #e2e8f0;
+    background: white;
+    padding: 0.5rem 1.5rem;
+}
+
+.import-info {
+    background: #f8fafc;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 0.5rem;
+}
+
+.import-stats {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+}
+
+.import-stats .separator {
+    color: #cbd5e1;
+}
+
+.import-stats .error-count {
+    color: #dc2626;
+}
+
+.import-stats strong {
+    color: #1e293b;
+}
+
+.import-preview {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.preview-tabs {
+    display: flex;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tab-btn {
+    padding: 0.5rem 0.75rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #64748b;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn:hover {
+    background: #e2e8f0;
+    color: #374151;
+}
+
+.tab-btn.active {
+    color: #4f46e5;
+    border-bottom-color: #4f46e5;
+    background: white;
+}
+
+.preview-content {
+    position: relative;
+}
+
+.tab-content {
+    display: none;
+    padding: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.data-table-container {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.data-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #374151;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.data-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.data-table td {
+    color: #4b5563;
+}
+
+.data-table .empty-cell {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.error-list {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.error-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    border-left: 4px solid #dc2626;
+}
+
+.error-item:last-child {
+    margin-bottom: 0;
+}
+
+.error-row {
+    font-weight: 600;
+    color: #dc2626;
+    margin-bottom: 0.25rem;
+}
+
+.error-message {
+    color: #991b1b;
+    font-size: 0.875rem;
+}
+
+.error-data {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: #ffffff;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+}
+
+.import-options {
+    background: #f8fafc;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.import-options .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.import-options .checkbox-group input[type="checkbox"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.import-options .checkbox-group span {
+    color: #374151;
+}
+
+/* 加载状态 */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #4f46e5;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    margin-left: 1rem;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+/* 多选座位功能样式 */
+.seat-multi-selected {
+    border: 3px solid #3b82f6 !important;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
+    background-color: rgba(59, 130, 246, 0.1) !important;
+    cursor: move !important;
+    position: relative;
+}
+
+/* 多选座位拖拽提示 */
+.seat-multi-selected::before {
+    content: '🖱️';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 10px;
+    opacity: 0.8;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.seat-multi-selected:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4) !important;
+    transition: all 0.2s ease;
+}
+
+.seat-multi-selecting {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    border-color: #3b82f6 !important;
+    border-width: 2px !important;
+    transform: scale(1.02);
+    transition: all 0.1s ease;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3) !important;
+}
+
+.selection-box {
+    position: absolute;
+    border: 2px dashed #3b82f6;
+    background-color: rgba(59, 130, 246, 0.15);
+    pointer-events: none;
+    z-index: 1000;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+    animation: selectionPulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes selectionPulse {
+    from {
+        border-color: #3b82f6;
+        background-color: rgba(59, 130, 246, 0.1);
+    }
+    to {
+        border-color: #2563eb;
+        background-color: rgba(59, 130, 246, 0.2);
+    }
+}
+
+.classroom-grid {
+    position: relative;
+    user-select: none;
+}
+
+.multi-select-toolbar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: none;
+    gap: 8px;
+    align-items: center;
+    z-index: 100;
+}
+
+.multi-select-toolbar.show {
+    display: flex;
+}
+
+.selection-count {
+    font-size: 0.875rem;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.multi-select-btn {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #374151;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.multi-select-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.multi-select-btn.primary {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.multi-select-btn.primary:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.multi-select-btn.danger {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+.multi-select-btn.danger:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+.seat-drag-preview {
+    opacity: 0.7;
+    transform: scale(0.95);
+    z-index: 10;
+    position: relative;
+}
+
+.seat-drop-target {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+    border-color: #22c55e !important;
+}
+
+.seat-drop-invalid {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    border-color: #ef4444 !important;
+}
+
+.seat-drop-swap {
+    background-color: rgba(251, 146, 60, 0.2) !important;
+    border-color: #f97316 !important;
+    position: relative;
+}
+
+.seat-drop-swap::after {
+    content: '⇄';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #f97316;
+    color: white;
+    font-size: 0.6rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+/* 多选拖拽时的视觉反馈 - 保持原样 */
+.seat-dragging-multi {
+    /* 移除视觉效果，保持原样 */
+    border: 2px solid #3b82f6 !important;
+    z-index: 1000 !important;
+}
+
+/* 拖拽时学生姓名保持显示（保持正常显示） */
+
+/* 拖拽时显示拖拽指示器 */
+.seat-dragging-multi::after {
+    content: '📦';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+.seat-multi-selected[draggable="true"] {
+    cursor: move !important;
+    position: relative;
+}
+
+.seat-multi-selected[draggable="true"]:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+    transition: all 0.2s ease;
+}
+
+
+
+/* 拖拽预览样式 */
+.seat-drag-preview {
+    background-color: rgba(59, 130, 246, 0.3) !important;
+    border: 2px dashed #3b82f6 !important;
+    position: relative;
+    animation: previewPulse 1s ease-in-out infinite alternate;
+}
+
+/* 源座位标记样式 */
+.seat-drag-source {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+    border: 2px solid #10b981 !important;
+    position: relative;
+}
+
+.seat-drag-preview::after {
+    content: '↓';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #3b82f6;
+    color: white;
+    font-size: 0.8rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    animation: bounceArrow 0.6s ease-in-out infinite alternate;
+}
+
+.drag-preview-student {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #3b82f6;
+    border-radius: 3px;
+    padding: 1px 4px;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@keyframes previewPulse {
+    from {
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+    }
+}
+
+@keyframes bounceArrow {
+    from {
+        transform: translateY(0px);
+    }
+    to {
+        transform: translateY(-3px);
+    }
+}
+
+/* 平板端优化 - 防止按钮叠加 */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .header {
+        padding: 0.4rem 1rem;
+        flex-wrap: nowrap;
+    }
+    
+    .header-center {
+        gap: 0.3rem;
+        flex-wrap: nowrap;
+    }
+    
+    .header-center .btn {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+    
+    .header-right {
+        flex-shrink: 0;
+    }
+    
+    .header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .header-promo {
+        font-size: 0.6rem;
+    }
+}
+
+/* ==================== A4纸打印优化样式 ==================== */
+@media print {
+    /* 设置A4纸张尺寸和边距 - 纵向打印 */
+    @page {
+        size: A4 portrait; /* A4纵向 */
+        margin: 1cm; /* 统一边距 */
+    }
+    
+    /* 纵向打印 */
+    html, body {
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+    }
+    
+    /* 重置页面布局 */
+    body {
+        background: white;
+        margin: 0;
+        padding: 0;
+        height: 297mm;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* 隐藏不需要打印的元素 */
+    .header,
+    .sidebar-left,
+    .panel-actions,
+    .student-controls,
+    .student-stats,
+    .classroom-header,
+    .btn,
+    .seat-remove-btn,
+    .seat-delete-btn,
+    .multi-select-toolbar,
+    .layout-settings-dropdown,
+    .modal,
+    button {
+        display: none !important;
+    }
+    
+    /* 主容器调整 */
+    .main-container {
+        display: flex;
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* 主内容区域 */
+    .main-content {
+        box-shadow: none;
+        border-radius: 0;
+        overflow: visible;
+        margin: 0;
+        padding: 0;
+        page-break-inside: avoid;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .classroom-container {
+        padding: 0;
+        height: 100%;
+        min-height: 210mm;
+        overflow: visible;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        position: relative;
+    }
+    
+    /* 座位图打印样式 - 顺时针旋转90度 */
+    .classroom-grid {
+        /* A4纵向纸：210mm × 297mm，减去2cm边距 = 190mm × 277mm */
+        /* 旋转90度后：原宽度占纸张高度(277mm)，原高度占纸张宽度(190mm) */
+        width: 26cm !important;
+        max-width: 26cm !important;
+        height: auto !important;
+        max-height: 17.5cm !important;
+        min-height: auto !important;
+        margin: 0;
+        padding: 0.3cm !important;
+        background: white !important;
+        border: 2px solid #333 !important;
+        border-radius: 6px;
+        
+        /* 移除固定宽高比 */
+        aspect-ratio: auto !important;
+        
+        /* 顺时针旋转90度 */
+        transform: rotate(90deg) !important;
+        transform-origin: center center !important;
+        
+        /* 确保在一页内 */
+        page-break-inside: avoid;
+        page-break-after: avoid;
+        
+        /* 调整间距 */
+        row-gap: 6px !important;
+        column-gap: 6px !important;
+    }
+    
+    /* 座位打印样式 - 横向布局（旋转后名字竖向） */
+    .seat {
+        width: 100px !important;
+        height: 55px !important;
+        min-width: 100px !important;
+        min-height: 55px !important;
+        padding: 6px 10px !important;
+        border: 1.5px solid #333 !important;
+        border-radius: 4px;
+        background: white !important;
+        page-break-inside: avoid;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .seat-occupied {
+        background: white !important;
+        border-color: #333 !important;
+    }
+    
+    .seat-empty {
+        background: #f5f5f5 !important;
+        border-color: #999 !important;
+        border-style: dashed !important;
+    }
+    
+    /* 学生姓名打印样式 - 横向显示（旋转后竖向） */
+    .student-name-display {
+        color: #000 !important;
+        font-size: 1.8rem !important;
+        font-weight: 800 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        line-height: 1.2 !important;
+        
+        /* 横向显示 */
+        writing-mode: horizontal-tb !important;
+        text-orientation: mixed !important;
+        letter-spacing: 0.05em !important;
+        width: 95% !important;
+        overflow: visible !important;
+        white-space: nowrap !important;
+    }
+    
+    /* 针对不同姓名长度的字体大小优化 */
+    .student-name-display.name-4 {
+        font-size: 1.4rem !important;
+    }
+    
+    .student-name-display.name-5 {
+        font-size: 1.2rem !important;
+    }
+    
+    .student-name-display.name-6 {
+        font-size: 1rem !important;
+    }
+    
+    .student-name-display.name-7 {
+        font-size: 0.9rem !important;
+    }
+    
+    .student-name-display.name-8-plus {
+        font-size: 0.8rem !important;
+    }
+    
+    /* 保持性别颜色（使用用户自定义颜色） */
+    .seat-occupied.male .student-name-display {
+        color: var(--male-color) !important;
+    }
+    
+    .seat-occupied.female .student-name-display {
+        color: var(--female-color) !important;
+    }
+    
+    /* 座位编号打印样式 */
+    .seat-number {
+        font-size: 0.65rem !important;
+        color: #666 !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        padding: 2px 4px !important;
+        font-weight: 700 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    /* 讲台打印样式（旋转后在左边） */
+    .podium-in-grid {
+        padding: 1% !important;
+        margin: 0.5% 0 0 0 !important;
+        page-break-inside: avoid;
+    }
+    
+    .podium-shape {
+        width: 200px !important;
+        height: 48px !important;
+        background: #666 !important;
+        border: 1.5px solid #333 !important;
+        border-radius: 6px !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .podium-text {
+        color: white !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    /* 确保颜色正确打印 */
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    /* 移除不必要的阴影和效果 */
+    .seat,
+    .classroom-grid,
+    .podium-shape {
+        box-shadow: none !important;
+    }
+}
+
+/* ==================== 触摸支持样式 ==================== */
+
+/* 触摸拖拽指示器 */
+.touch-drag-indicator {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* 改善触摸目标大小 */
+@media (pointer: coarse) {
+    /* 在触摸设备上增大点击目标 */
+    .seat {
+        min-width: 100px;
+        min-height: 90px;
+    }
+    
+    .seat-remove-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+    
+    .student-name-display {
+        padding: 8px 12px;
+        font-size: 1rem;
+    }
+    
+    .multi-select-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 10px 16px;
+    }
+    
+    /* 所有按钮触摸目标优化 */
+    .btn {
+        min-height: 44px;
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9375rem;
+    }
+    
+    .btn-small {
+        min-height: 40px;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    /* 学生列表项触摸优化 */
+    .student-item {
+        min-height: 44px;
+        padding: 0.75rem;
+    }
+    
+    .student-item .btn-edit,
+    .student-item .btn-delete {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 0.5rem;
+    }
+    
+    /* 输入框和选择框触摸优化 */
+    .input-field,
+    .select-field {
+        min-height: 44px;
+        padding: 0.625rem;
+        font-size: 1rem;
+    }
+    
+    /* 颜色选择器触摸优化 */
+    .color-swatch {
+        min-width: 40px;
+        min-height: 40px;
+    }
+    
+    /* 约束项触摸优化 */
+    .constraint-item .btn-delete {
+        min-width: 36px;
+        min-height: 36px;
+    }
+}
+
+/* 防止触摸时的文本选择 */
+.classroom-grid,
+.seat,
+.student-name-display {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* 触摸反馈 */
+@media (hover: none) and (pointer: coarse) {
+    .seat:active {
+        transform: scale(0.98);
+    }
+    
+    .student-name-display:active {
+        background: rgba(59, 130, 246, 0.15);
+    }
+    
+    button:active,
+    .btn:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    
+    /* 学生列表项触摸反馈 */
+    .student-item:active {
+        background: rgba(59, 130, 246, 0.1);
+        transform: scale(0.98);
+    }
+    
+    .student-item .btn-edit:active,
+    .student-item .btn-delete:active {
+        transform: scale(0.9);
+    }
+    
+    /* 输入框和选择框触摸反馈 */
+    .input-field:active,
+    .select-field:active {
+        border-color: #3b82f6;
+    }
+    
+    /* 颜色选择器触摸反馈 */
+    .color-swatch:active {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    
+    /* 复选框和单选框触摸反馈 */
+    label:active {
+        opacity: 0.7;
+    }
+    
+    /* 模态框关闭按钮触摸反馈 */
+    .modal-close:active {
+        transform: scale(0.9);
+    }
+    
+    /* 设置按钮触摸反馈 */
+    .settings-btn:active,
+    .rotation-btn-header:active {
+        transform: scale(0.92);
+    }
+}
+
+/* 优化触摸滚动 */
+.classroom-grid {
+    -webkit-overflow-scrolling: touch;
+    /* 允许页面滚动，但在拖拽开始时通过JS禁用 */
+    touch-action: pan-y pan-x;
+}
+
+/* 拖拽时禁用滚动 */
+.classroom-grid.is-dragging,
+.classroom-grid.is-selecting {
+    touch-action: none !important;
+    overflow: hidden;
+}
+
+/* 选择框在触摸设备上的样式优化 */
+@media (pointer: coarse) {
+    .selection-box {
+        border: 3px solid rgba(59, 130, 246, 0.5);
+        background: rgba(59, 130, 246, 0.15);
+    }
+}

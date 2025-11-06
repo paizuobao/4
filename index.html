@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024, initial-scale=1.0">
+    <title>排座宝</title>
+    <!-- 页面保护层 - 必须最先加载 -->
+    <script src="protect.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- SheetJS库用于Excel文件处理 -->
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- 头部工具栏 -->
+    <header class="header">
+        <div class="header-left">
+            <h1><span class="cute-font">排座宝</span></h1>
+            <span class="header-promo">欢迎关注小红书账号：排座宝，并提出建议</span>
+        </div>
+        <div class="header-center">
+            <button id="randomSeat" class="btn btn-primary">随机排座</button>
+            <button id="undoBtn" class="btn btn-secondary" disabled>↶ 撤销</button>
+            <button id="clearSeats" class="btn btn-secondary">重置</button>
+            <button id="saveLayout" class="btn btn-success">导出文件</button>
+            <button id="printLayout" class="btn btn-info">🖨️ 打印</button>
+        </div>
+        <div class="header-right">
+            <button id="seatingSettingsBtn" class="btn btn-outline">排座规则</button>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="main-container">
+        <!-- 左侧学生管理区 -->
+        <aside class="sidebar-left">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">学生管理</h3>
+                </div>
+                <div class="panel-actions">
+                    <button id="addStudent" class="btn btn-small btn-primary">+ 手添</button>
+                    <button id="importExcel" class="btn btn-small btn-success">📊 导入Excel</button>
+                    <button id="clearAllStudents" class="btn btn-small btn-danger">🗑️ 清空</button>
+                </div>
+                <div class="student-controls">
+                    <label for="searchStudent" class="sr-only">搜索学生</label>
+                    <input type="text" id="searchStudent" placeholder="搜索学生..." class="input-field">
+                    <label for="filterStudents" class="sr-only">筛选学生</label>
+                    <select id="filterStudents" class="select-field">
+                        <option value="all">全部学生</option>
+                        <option value="seated">已安排</option>
+                        <option value="unseated" selected>未安排</option>
+                    </select>
+                </div>
+                <div class="student-list" id="studentList">
+                    <!-- 学生列表将由JavaScript动态生成 -->
+                </div>
+                <div class="student-stats">
+                    <div class="stat">
+                        <span class="stat-label">总人数:</span>
+                        <span id="totalStudents" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">已安排:</span>
+                        <span id="seatedStudents" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">未安排:</span>
+                        <span id="unseatedStudents" class="stat-value">0</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 中央座位显示区 -->
+        <section class="main-content">
+            <div class="classroom-container">
+                <div class="classroom-header">
+                    <h3>教室座位图</h3>
+                    <div class="classroom-info">
+                        <span id="classroomSize">8行 × 6列</span>
+                        <span class="separator">|</span>
+                        <div class="rotation-controls-header">
+                            <span class="rotation-header-label">座位轮换:</span>
+                            <div class="rotation-buttons-header">
+                                <button id="rotateRowLeft" class="btn btn-small btn-outline rotation-btn-header" title="整排向左移动">←</button>
+                                <button id="rotateRowRight" class="btn btn-small btn-outline rotation-btn-header" title="整排向右移动">→</button>
+                                <button id="rotateColForward" class="btn btn-small btn-outline rotation-btn-header" title="整列向前移动">↑</button>
+                                <button id="rotateColBackward" class="btn btn-small btn-outline rotation-btn-header" title="整列向后移动">↓</button>
+                            </div>
+                        </div>
+                        <span class="separator">|</span>
+                        <div class="layout-settings-container">
+                            <button id="layoutSettingsBtn" class="btn btn-small btn-outline settings-btn">设置</button>
+                            <div id="layoutSettingsDropdown" class="layout-settings-dropdown" style="display: none;">
+                                <div class="layout-settings-item">
+                                    <div class="layout-setting-group">
+                                        <div class="layout-header">
+                                            <span class="layout-section-title">教室布局</span>
+                                            <button id="applyLayoutDropdown" class="btn btn-small btn-primary apply-layout-dropdown">应用</button>
+                                        </div>
+                                        <div class="layout-controls-dropdown">
+                                            <div class="input-group-compact">
+                                                <label for="rowCountDropdown">行数:</label>
+                                                <input type="number" id="rowCountDropdown" value="6" min="1" max="15" class="input-small-dropdown">
+                                            </div>
+                                            <div class="input-group-compact">
+                                                <label for="colCountDropdown">列数:</label>
+                                                <input type="number" id="colCountDropdown" value="8" min="1" max="12" class="input-small-dropdown">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layout-settings-item">
+                                    <label class="checkbox-group" for="showCoordinatesToggle">
+                                        <input type="checkbox" id="showCoordinatesToggle">
+                                        <span>显示坐标</span>
+                                    </label>
+                                </div>
+                                <div class="layout-settings-item">
+                                    <div class="font-setting-group">
+                                        <span>字体</span>
+                                        <select id="fontSelectDropdown" class="select-field-small">
+                                            <option value="song">宋体</option>
+                                            <option value="hei">黑体</option>
+                                            <option value="kai">楷体</option>
+                                            <option value="yahei">微软雅黑</option>
+                                            <option value="fangsong">仿宋</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layout-settings-item">
+                                    <div class="color-setting-section">
+                                        <span class="color-section-title">男生颜色</span>
+                                        <div class="color-swatches" data-gender="male">
+                                            <div class="color-swatch selected" data-color="#2563eb" style="background-color: #2563eb;" title="默认蓝"></div>
+                                            <div class="color-swatch" data-color="#3498DB" style="background-color: #3498DB;" title="天蓝"></div>
+                                            <div class="color-swatch" data-color="#2980B9" style="background-color: #2980B9;" title="深蓝"></div>
+                                            <div class="color-swatch" data-color="#2ECC71" style="background-color: #2ECC71;" title="亮绿"></div>
+                                            <div class="color-swatch" data-color="#27AE60" style="background-color: #27AE60;" title="森林绿"></div>
+                                            <div class="color-swatch" data-color="#1ABC9C" style="background-color: #1ABC9C;" title="青绿"></div>
+                                            <div class="color-swatch" data-color="#9B59B6" style="background-color: #9B59B6;" title="紫色"></div>
+                                            <div class="color-swatch" data-color="#8E44AD" style="background-color: #8E44AD;" title="深紫"></div>
+                                            <div class="color-swatch" data-color="#1a1a1a" style="background-color: #1a1a1a;" title="黑色"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layout-settings-item">
+                                    <div class="color-setting-section">
+                                        <span class="color-section-title">女生颜色</span>
+                                        <div class="color-swatches" data-gender="female">
+                                            <div class="color-swatch selected" data-color="#ec4899" style="background-color: #ec4899;" title="默认粉"></div>
+                                            <div class="color-swatch" data-color="#E91E63" style="background-color: #E91E63;" title="玫瑰红"></div>
+                                            <div class="color-swatch" data-color="#EC407A" style="background-color: #EC407A;" title="浅粉"></div>
+                                            <div class="color-swatch" data-color="#E74C3C" style="background-color: #E74C3C;" title="警告红"></div>
+                                            <div class="color-swatch" data-color="#F39C12" style="background-color: #F39C12;" title="活力橙"></div>
+                                            <div class="color-swatch" data-color="#D35400" style="background-color: #D35400;" title="南瓜橙"></div>
+                                            <div class="color-swatch" data-color="#F1C40F" style="background-color: #F1C40F;" title="金黄"></div>
+                                            <div class="color-swatch" data-color="#9B59B6" style="background-color: #9B59B6;" title="紫色"></div>
+                                            <div class="color-swatch" data-color="#1a1a1a" style="background-color: #1a1a1a;" title="黑色"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="classroom-grid" id="classroomGrid">
+                    <!-- 多选工具栏 -->
+                    <div class="multi-select-toolbar" id="multiSelectToolbar">
+                        <span class="selection-count" id="selectionCount">已选择 0 个座位</span>
+                        <button class="multi-select-btn" id="selectAllSeats">全选</button>
+                        <button class="multi-select-btn" id="clearSelection">取消选择</button>
+                        <button class="multi-select-btn danger" id="clearSelectedSeats">批量清空</button>
+                    </div>
+                    <!-- 座位网格将由JavaScript动态生成 -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 模态框 -->
+    <div id="studentModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">添加学生</h3>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="studentForm">
+                    <div class="form-group">
+                        <label for="studentName">姓名:</label>
+                        <input type="text" id="studentName" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentId">学号:</label>
+                        <input type="text" id="studentId" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="studentHeight">身高(cm):</label>
+                        <input type="number" id="studentHeight" class="input-field" min="100" max="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="studentGender">性别:</label>
+                        <select id="studentGender" class="select-field">
+                            <option value="">请选择</option>
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="studentVision">
+                            视力不佳(需要坐前排)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentNotes">备注:</label>
+                        <textarea id="studentNotes" class="input-field" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelStudent" class="btn btn-secondary">取消</button>
+                <button type="submit" id="saveStudent" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Excel导入预览模态框 -->
+    <div id="excelPreviewModal" class="modal" style="display: none;">
+        <div class="modal-content excel-preview-modal">
+            <div class="modal-header">
+                <h3>Excel导入预览</h3>
+                <span class="modal-close" onclick="app.hideExcelPreviewModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="import-info">
+                    <div class="import-stats">
+                        <span>共读取到 <strong id="totalImportCount">0</strong> 条记录</span>
+                        <span class="separator">|</span>
+                        <span>有效记录 <strong id="validImportCount">0</strong> 条</span>
+                        <span class="separator">|</span>
+                        <span class="error-count">错误记录 <strong id="errorImportCount">0</strong> 条</span>
+                    </div>
+                </div>
+                <div class="import-preview">
+                    <div class="preview-tabs">
+                        <button class="tab-btn active" data-tab="valid">有效数据</button>
+                        <button class="tab-btn" data-tab="errors">错误数据</button>
+                    </div>
+                    <div class="preview-content">
+                        <div id="validDataPreview" class="tab-content active">
+                            <div class="data-table-container">
+                                <table class="data-table" id="validDataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>姓名</th>
+                                            <th>学号</th>
+                                            <th>性别</th>
+                                            <th>身高</th>
+                                            <th>视力</th>
+                                            <th>备注</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="validDataBody">
+                                        <!-- 有效数据将在这里显示 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="errorsDataPreview" class="tab-content">
+                            <div class="error-list" id="errorsList">
+                                <!-- 错误信息将在这里显示 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="import-options">
+                    <label class="checkbox-group">
+                        <input type="checkbox" id="overwriteExisting" checked>
+                        <span>覆盖同名学生信息</span>
+                    </label>
+                    <label class="checkbox-group">
+                        <input type="checkbox" id="skipInvalid" checked>
+                        <span>跳过无效记录</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelImport" class="btn btn-secondary">取消</button>
+                <button type="button" id="confirmImport" class="btn btn-primary">确认导入</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 排座规则模态框 -->
+    <div id="seatingSettingsModal" class="modal seating-settings-modal" style="display: none;">
+        <div class="modal-content seating-settings-content">
+            <div class="modal-header">
+                <h3>排座规则</h3>
+                <span class="modal-close" onclick="app.hideSeatingSettingsModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>排座规则</label>
+                    <div class="rule-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="arrangeByRow">
+                            <label for="arrangeByRow">按学号排列「行」</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="arrangeByColumn">
+                            <label for="arrangeByColumn">按学号排列「列」</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="heightRule">
+                            <label for="heightRule">按身高</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="sameGenderRule">
+                            <label for="sameGenderRule">同性同桌</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="setting-group">
+                    <label>约束条件</label>
+                    <div class="constraint-list" id="constraintList">
+                        <!-- 约束条件将由JavaScript动态生成 -->
+                    </div>
+                    <div class="constraint-input-group">
+                        <label for="constraintInput" class="sr-only">添加座位约束</label>
+                        <input type="text" id="constraintInput" placeholder="例如：张三不能坐第一排" class="input-field" style="flex: 1;">
+                        <button id="addConstraint" class="btn btn-small btn-primary" style="margin-left: 0.5rem;">添加</button>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="applySeatingRules" class="btn btn-primary">规则排座</button>
+                <button type="button" id="closeSeatingSettings" class="btn btn-secondary">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 隐藏的文件上传input -->
+    <label for="excelFileInput" class="sr-only">上传Excel文件</label>
+    <input type="file" id="excelFileInput" accept=".xlsx,.xls" style="display: none;">
+
+    <!-- JavaScript文件 -->
+    <script src="app.js"></script>
+</body>
+</html>
